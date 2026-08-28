@@ -2,23 +2,20 @@ package com.library.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
 @Configuration
+@ConditionalOnProperty(name = "DATABASE_URL")
 public class DataSourceConfig {
 
     @Bean
-    public DataSource dataSource(@Value("${DATABASE_URL:}") String databaseUrl) {
+    public DataSource dataSource(@Value("${DATABASE_URL}") String databaseUrl) {
         HikariDataSource ds = new HikariDataSource();
         ds.setDriverClassName("org.postgresql.Driver");
-
-        if (databaseUrl == null || databaseUrl.isBlank()) {
-            throw new IllegalStateException("DATABASE_URL environment variable is not set");
-        }
-
         ds.setJdbcUrl(buildJdbcUrl(databaseUrl));
         return ds;
     }
