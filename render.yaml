@@ -2,11 +2,9 @@ services:
   - type: web
     name: library-management-system
     runtime: docker
-    disk:
-      name: sqlite-data
-      mountPath: /data
-      sizeGB: 1
+    plan: free
     envVars:
       - key: JAVA_OPTS
-        value: "-Xms256m -Xmx512m"
+        value: "-Xms256m -Xmx256m"
     healthCheckPath: /api/books
+    autoDeploy: true
