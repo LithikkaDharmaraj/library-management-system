@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: library-management-system
+    runtime: docker
+    disk:
+      name: sqlite-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: JAVA_OPTS
+        value: "-Xms256m -Xmx512m"
+    healthCheckPath: /api/books
